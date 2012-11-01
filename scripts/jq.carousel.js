@@ -11,6 +11,7 @@
  * 2012-03-13 16:29
  */
 ;(function($, undefined) {
+  'use strict';
 
   var Carousel = function(parent, conf) {
     if ( !(this instanceof Carousel) ) {
@@ -416,7 +417,7 @@
       }
     },
 
-    _callAPI: function(api, arguments) {
+    _callAPI: function(api, args) {
       var self = this;
 
       if ( typeof self[api] !== 'function' ) {
@@ -427,7 +428,7 @@
         throw 'Method begins with an underscore are not exposed.';
       }
 
-      return self[api](arguments);
+      return self[api](args);
     },
 
     indicator: function(num) {
@@ -556,11 +557,11 @@
   }
 
   // $.fn extend
-  jQuery.fn.carousel = function(conf, arguments) {
+  jQuery.fn.carousel = function(conf, args) {
     var carousel = this.data('carousel');
 
     if ( carousel ) {
-      return carousel._callAPI(conf, arguments);
+      return carousel._callAPI(conf, args);
     } else {
       carousel = Carousel(this, conf);
       this.data('carousel', carousel);
