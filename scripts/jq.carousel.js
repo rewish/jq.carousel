@@ -13,11 +13,11 @@
 ;(function($, undefined) {
 
   var Carousel = function(parent, conf) {
-    this.namespace = 'Carousel';
-    if ( this instanceof Carousel ) {
-      return this.init(parent, conf);
+    if ( !(this instanceof Carousel) ) {
+      return new Carousel(parent, conf);
     }
-    return new Carousel(parent, conf);
+    this.namespace = 'Carousel';
+    this.init(parent, conf);
   };
 
   Carousel.prototype = {
@@ -41,8 +41,6 @@
       self._build();
       self._setIndicator();
       self._eventify();
-
-      return self;
     },
 
     _build: function() {
@@ -483,11 +481,11 @@
   };
 
   var Indicator = function(carousel, num) {
-    this.namespace = 'Indicator';
-    if ( this instanceof Indicator ) {
-      return this.init(carousel, num);
+    if ( !(this instanceof Indicator) ) {
+      return new Indicator(carousel, num);
     }
-    return new Indicator(carousel, num);
+    this.namespace = 'Indicator';
+    this.init(carousel, num);
   };
   Indicator.prototype = {
     init: function(carousel, num) {
