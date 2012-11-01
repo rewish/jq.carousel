@@ -32,7 +32,9 @@
         start    : 1,       // int
         group    : 1,       // int
         duration : 0.2,     // int or float, 0.2 => 0.2s
-        indicator: false    // boolean
+        indicator: false,   // boolean
+        indicator_class  : 'carousel_indicator',  // string
+        group_inner_class: 'carousel_group_inner' // string
       }, conf);
 
       self.$elem = parent;
@@ -133,7 +135,7 @@
       if ( conf.group === 1 ) {
         self.$items = self.$carousel_wrap.children();
       } else {
-        self.$items = self.$carousel_wrap.find('.carousel_group_inner');
+        self.$items = self.$carousel_wrap.find('.' + conf.group_inner_class);
       }
       self._setSize();
       self.$elem.trigger('carousel.ready');
@@ -167,7 +169,8 @@
           division = l / conf.group,
           group_length = Math.ceil(division),
           group = new Array(group_length),
-          group_size = self.item_size * conf.group;
+          group_size = self.item_size * conf.group,
+          inner_class = conf.group_inner_class;
 
       for ( ; i < l; i++ ) {
         if ( i !== 0 && i % conf.group === 0 ) {
@@ -175,7 +178,7 @@
         }
 
         if ( !group[k] ) {
-          group[k] = $('<div class="carousel_group_inner"></div>');
+          group[k] = $('<div class="' + inner_class + '"></div>');
           group[k]
             .css('float', self.float)
             .css(self.prop, group_size);
@@ -188,7 +191,7 @@
         self.$carousel_wrap.append(group[i]);
       }
 
-      self.$items = self.$carousel_wrap.find('.carousel_group_inner');
+      self.$items = self.$carousel_wrap.find('.' + inner_class);
       self.items_length = self.$items.length;
       self.items_len_hidden = 1;
       self.item_size = self.item_size * conf.group;
@@ -246,7 +249,7 @@
       if ( self.conf.group === 1 ) {
         $items = self.$carousel_wrap.children();
       } else {
-        $items = self.$elem.find('.carousel_group_inner');
+        $items = self.$elem.find('.' + self.conf.group_inner_class);
       }
 
       self.total_size = 0;
@@ -386,7 +389,7 @@
     _getIndicator: function(num) {
       var self = this,
           indicator = Indicator(self, num),
-          $indicator = $('<div class="carousel_indicator"></div>');
+          $indicator = $('<div class="' + self.conf.indicator_class + '"></div>');
 
       $indicator.data('indicator', indicator);
       $indicator.append(indicator.$elems);
