@@ -47,9 +47,7 @@
 
     _build: function() {
       var self = this,
-          conf = self.conf,
-          start_pos = 0,
-          box_total_size = 0;
+          conf = self.conf;
 
       self.offset_prop = self.conf.vertical ? 'offsetHeight' : 'offsetWidth';
       self.float = conf.vertical ? 'none' : 'left';
@@ -71,8 +69,6 @@
             self.$items
           )
       );
-
-      box_total_size = self.items_length * self.$items[0][self.offset_prop];
 
       // setup
       self.$items.css({
@@ -112,11 +108,9 @@
 
       // carousel width and height
       if ( conf.loop ) {
-        start_pos = self.items_len_hidden + self.current - 1;
-        self.current_pos = -start_pos * self.item_size;
+        self.current_pos = -(self.items_len_hidden + self.current - 1) * self.item_size;
         self.default_pos = -self.items_len_hidden * self.item_size;
       } else {
-        start_pos = self.items_length < conf.start ? 1 : conf.start;
         self.current_pos = 0;
         self.default_pos = 0;
       }
@@ -239,7 +233,6 @@
 
     _cloneGroup: function() {
       var self = this,
-          len = self.items_len_hidden,
           $first = self.$items.eq(0).clone(),
           $last = self.$items.eq(self.items_length-1).clone();
 
@@ -291,8 +284,7 @@
     },
 
     _getNext: function(current) {
-      var self = this,
-          conf = self.conf;
+      var self = this;
 
       if ( current + 1 > self.items_length ) {
         current = 1;
@@ -304,8 +296,7 @@
     },
 
     _getPrev: function(current) {
-      var self = this,
-          conf = self.conf;
+      var self = this;
 
       if ( current - 1 === 0 ) {
         current = self.items_length;
@@ -334,7 +325,6 @@
     _toNext: function() {
       var self = this,
           conf = self.conf,
-          hidden_len = self.items_len_hidden,
           prop = {};
 
       if ( !self.conf.loop && self.current === self.items_length ) {
